@@ -46,7 +46,7 @@ function addGamesToPage(games) {
             <img class="game-img" src="${game.img}" />
             <h2>${game.name}</h2>
             <p>${game.description}</p>
-            <p>Backers: ${game.backers}</p>
+            <p>Pledged: $${game.pledged.toLocaleString()} / $${game.goal.toLocaleString()}</p>
         `;
         
         gameCard.innerHTML = display;
@@ -58,7 +58,7 @@ function addGamesToPage(games) {
 
 // call the function we just defined using the correct variable
 // later, we'll call this function using a different list of games
-
+addGamesToPage(GAMES_JSON);
 
 /*************************************************************************************
  * Challenge 4: Create the summary statistics at the top of the page displaying the
@@ -70,16 +70,21 @@ function addGamesToPage(games) {
 const contributionsCard = document.getElementById("num-contributions");
 
 // use reduce() to count the number of total contributions by summing the backers
-
+const totalContributions = GAMES_JSON.reduce((acc, game) => acc + game.backers, 0);
 
 // set the inner HTML using a template literal and toLocaleString to get a number with commas
-
+contributionsCard.innerHTML = `
+    <p>${totalContributions.toLocaleString()}</p>
+`;
 
 // grab the amount raised card, then use reduce() to find the total amount raised
 const raisedCard = document.getElementById("total-raised");
+const totalRaised = GAMES_JSON.reduce((acc, game) => acc + game.pledged, 0);
 
 // set inner HTML using template literal
-
+raisedCard.innerHTML = `
+    <p>$${totalRaised.toLocaleString()}</p>
+`;
 
 // grab number of games card and set its inner HTML
 const gamesCard = document.getElementById("num-games");
